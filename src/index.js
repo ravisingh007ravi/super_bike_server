@@ -1,19 +1,24 @@
 const express = require('express');
-const mongodb = require('mongoose');
-const router = require('./routes/routes.js')
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+const router = require('./routes/routes.js');
+// const {ValidURL} = require('./middleware/URLNotFound.js')
 
+dotenv.config();
 const app = express();
 
+app.use(express.json())
+
 const PORTNUMBER = 8080;
-const MongoDBURl = 'mongodb+srv://ravi:3S36QyVxnbtiUrlK@cluster0.tt7wzcu.mongodb.net/'
 
-mongodb.connect(MongoDBURl)
-.then(() => console.log('Connected to MongoDB'))
-.catch((error) => console.log('MongoDB connection error', error.message));
+mongoose.connect(process.env.MONGODB_URL)
+  .then(() => console.log('Connected to MongoDB'))
+  .catch((error) => console.log('MongoDB connection error', error.message));
 
-app.use('/',router);
+app.use('/', router);
+// app.all('/*',ValidURL)
 
-app.listen(PORTNUMBER,()=>console.log('Server is running on port -',PORTNUMBER));
+app.listen(PORTNUMBER, () => console.log('Server is running on port -', PORTNUMBER));
 
 
 

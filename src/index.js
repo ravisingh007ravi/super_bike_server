@@ -2,7 +2,6 @@ const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const router = require('./routes/routes.js');
-// const {ValidURL} = require('./middleware/URLNotFound.js')
 
 dotenv.config();
 const app = express();
@@ -16,7 +15,6 @@ mongoose.connect(process.env.MONGODB_URL)
   .catch((error) => console.log('MongoDB connection error', error.message));
 
 app.use('/', router);
-// app.all('/*',ValidURL)
 
 app.listen(PORTNUMBER, () => console.log('Server is running on port -', PORTNUMBER));
 
